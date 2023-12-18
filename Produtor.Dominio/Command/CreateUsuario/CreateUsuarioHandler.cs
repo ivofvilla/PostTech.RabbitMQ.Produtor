@@ -5,7 +5,7 @@ using Produtor.Repositorio.Interfaces;
 using System.Reflection;
 namespace Produtor.Dominio.Command.CreateUsuario
 {
-    public class CreateUsuarioHandler : IRequestHandler<CreateUsuarioCommand, bool>
+    public class CreateUsuarioHandler : IRequestHandler<CreateUsuarioCommand, string>
     {
         private readonly IUsuarioRepositorio _usuarioRepositorio;
         private readonly IValidator<CreateUsuarioCommand> _validator;
@@ -16,17 +16,17 @@ namespace Produtor.Dominio.Command.CreateUsuario
             _validator = validator;
         }
 
-        public async Task<bool> Handle(CreateUsuarioCommand command, CancellationToken cancellationToken = default)
+        public async Task<string> Handle(CreateUsuarioCommand command, CancellationToken cancellationToken = default)
         {
             var validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (!validationResult.IsValid)
             {
-                return false;
+                return string.Join(" ", validationResult.Errors) ;
             }
 
             await _usuarioRepositorio.AdicionarAsync(command.ToUsuario(), cancellationToken);
 
-            return true;
+            return string.Empty;
         }
     }
 }

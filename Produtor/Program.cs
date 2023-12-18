@@ -18,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>().Reverse();
+builder.Services.AddScoped<IRequestHandler<CreateUsuarioCommand, string>, CreateUsuarioHandler>();
 builder.Services.AddTransient<IValidator<CreateUsuarioCommand>, CreateUsuarioValidator>();
 
 //config do RabbitMQ

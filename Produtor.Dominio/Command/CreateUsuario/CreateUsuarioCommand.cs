@@ -3,7 +3,7 @@ using Produtor.Modelo;
 
 namespace Produtor.Dominio.Command.CreateUsuario
 {
-    public class CreateUsuarioCommand : IRequest<bool>
+    public class CreateUsuarioCommand : IRequest<string>
     {
         public int Id { get; set; }
         public string Nome { get; set; }

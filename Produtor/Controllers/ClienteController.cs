@@ -21,12 +21,12 @@ namespace Produtor.Controllers
         {
             var result = await _mediator.Send(command, cancellationToken);
 
-            if (result != null)
+            if (string.IsNullOrEmpty(result))
             {
                 return Ok("Usuário criada com sucesso!");
             }
 
-            return BadRequest("Ocorreu um erro!");
+            return BadRequest(result);
         }
     }
 }
