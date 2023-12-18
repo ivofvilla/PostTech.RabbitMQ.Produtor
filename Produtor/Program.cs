@@ -1,13 +1,24 @@
 using MassTransit;
+using FluentValidation;
+using MediatR;
+using System.Reflection;
+using Produtor.Dominio.Command.CreateUsuario;
+using Produtor.Repositorio.Repositorio;
+using Produtor.Repositorio.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container.B
 
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>().Reverse();
+builder.Services.AddTransient<IValidator<CreateUsuarioCommand>, CreateUsuarioValidator>();
 
 //config do RabbitMQ
 var configuration = builder.Configuration;
